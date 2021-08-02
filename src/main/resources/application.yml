@@ -1,0 +1,34 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    gateway:
+      # 默认过滤器对所有路由生效
+      default-filters:
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+#            allowed-origins: "*"
+            allowed-origin-patterns: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+            allowed-methods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTION
+
+
+#      routes:
+#        - id: redis-rate-limiter
+#          uri: lb://security-server/
+#          filiter:
+#            - name: RequestRateLimiter
+#              args:
+#                key-resolver: '#{@ipKeyResolver}'
+#                redis-rate-limiter.replenishRate: 1
+#                redis-rate-limiter.burstCapacity: 1
+#          predicates:
+#            - Method=*
