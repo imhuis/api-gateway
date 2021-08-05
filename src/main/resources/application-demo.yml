@@ -1,0 +1,49 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: security
+          uri: lb://security-server/
+          predicates:
+            - Path=/**
+          # gateway过滤器
+          filters:
+            # 增加请求头
+            - AddRequestHeader=X-Request-Foo, Bar
+            # 移除请求头
+            - RemoveRequestHeader=Bar
+            # 增加请求参数
+            - AddRequestParameter=foo, bar
+            # 增加响应头
+            - AddResponseHeader=X-Response-Foo, Bar
+            # 移除响应头
+            - RemoveResponseHeader=X-Response-Foo
+            # 设置响应头
+            - SetResponseHeader=X-Response-Foo, Bar
+            # 去除前缀过滤器 请求参数剥离
+            - StripPrefix=1
+            # 路由增加前缀
+            - PrefixPath=/xx
+            # 原始主机头
+            - PreserveHostHeader
+            # 重定向
+            - RedirectTo=302, https://google.com
+            # 重写路径
+            - RewritePath=
+            # 保存session
+            - SaveSession
+            # 路径模板
+            - SetPath=/xx/{path}
+            # 设置响应状态
+            - SetStatus=404
+            # 重试
+            - name: Retry
+            # 限制请求大小
+            - name: RequestSize
+              args:
+                maxSize: 5000000
+            -
+
+logging:
+  level:
+    org.springframework.cloud.gateway: info

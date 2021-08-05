@@ -1,5 +1,7 @@
 spring:
   cloud:
+    loadbalancer:
+      enabled: true
     gateway:
       routes:
         - id: security
