@@ -2,10 +2,31 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: security
-          uri: lb://security-server/
+        - id: example
+          uri: lb://example
+          # 转发规则
           predicates:
-            - Path=/**
+            # path_route
+            - Path=/**,/u/**
+            # before_route
+            - Before=2017-01-20T17:42:47.789-07:00[America/Denver]
+            # after_route
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+            - Between=2017-01-20T17:42:47.789-07:00[America/Denver], 2017-01-21T17:42:47.789-07:00[America/Denver]
+            # cookie_route
+            - Cookie=chocolate, ch.p
+            # header_route
+            - Header=X-Request-Id, \d+
+            # host_route
+            - Host=**.somehost.org,**.anotherhost.org
+            # method_route
+            - Method=GET,POST
+            # query_route
+            - Query=red, gree.
+            # remoteaddr_route
+            - RemoteAddr=192.168.1.1/24
+            # weight_route
+            - Weight=group1, 2
           # gateway过滤器
           filters:
             # 增加请求头

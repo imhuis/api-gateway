@@ -5,9 +5,16 @@ spring:
     gateway:
       routes:
         - id: security
-          uri: lb://security-server/
+          uri: lb://security-server
           predicates:
             - Path=/auth/**
+          filters:
+            - StripPrefix=1
+        # 代理微服务，如果同时存在两个服务提供者，但是有一个挂了，则服务轮询机制导致一次好一次坏
+        - id: coffee
+          uri: lb://server-producer
+          predicates:
+            - Path=/p/**
           filters:
             - StripPrefix=1
 
