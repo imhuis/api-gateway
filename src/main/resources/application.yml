@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: dev
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     gateway:
       # 默认过滤器对所有路由生效
